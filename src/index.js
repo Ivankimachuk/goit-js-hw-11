@@ -17,8 +17,8 @@ const formEl = document.querySelector('.search-form');
 const inputEl = document.querySelector ('input');
 const galleryEl = document.querySelector('.gallery')
 const loadBtn = document.querySelector('.load-more')
-  
-loadBtn.disabled = true
+loadBtn.style.display = 'none';
+loadBtn.disabled = true;
 let imageName = '';
 let page = 0;
 let perPage = 40;
@@ -30,10 +30,10 @@ function processingRequest(event) {
   imageName = '';
   page = 0;
   galleryEl.innerHTML = '';
-  loadBtn.classList.remove('block')
+  loadBtn.style.display = 'block';
   if((event.action = inputEl.value === '')) {
-    return  Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-    
+    return  Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.'),
+    loadBtn.style.display = 'none';
   } 
     imageName = event.action = inputEl.value;
     page += 1;
@@ -44,7 +44,7 @@ function processingRequest(event) {
          Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         } else {
           return addCardsOnThePage(res),
-          loadBtn.classList.add('block'),
+          loadBtn.style.display = 'block',
           (loadBtn.disabled = false);
         }
     }).catch(e => {
@@ -123,9 +123,10 @@ function theEndCollectionBtnLoadMore(total) {
   let resultOfTheCollection = page * perPage < total;
   if(!resultOfTheCollection) {
     (loadBtn.disabled = true), 
-    Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   } else {
     return;
   }
 }
     
+
